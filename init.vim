@@ -20,6 +20,8 @@ Plug 'autozimu/LanguageClient-neovim'
 Plug 'roxma/nvim-Completion-Manager'
 " language specific
 Plug 'rust-lang/rust.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'ekalinin/Dockerfile.vim'
 call plug#end()
 
 " aesthetic
