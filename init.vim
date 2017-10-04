@@ -9,9 +9,11 @@ Plug 'vim-airline/vim-airline-themes'
 " files
 Plug 'airblade/vim-rooter'
 Plug 'cloudhead/neovim-fuzzy'
+Plug 'scrooloose/nerdtree'
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " commenting
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -94,8 +96,13 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDTrimTrailingWhitespace = 1
 
+" nerdtree
+nmap <leader>o :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 " doxygen
-let g:DoxygenToolkit_authorName="Neil Ashford"
 nmap <leader>d :Dox<CR>
 
 " tabular
