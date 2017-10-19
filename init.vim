@@ -40,7 +40,7 @@ let g:airline_powerline_fonts = 1
 " rules and margins and spelling
 set relativenumber
 set number
-autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal cc=80
+autocmd FileType c,h,cpp,hpp,python,sh,mysql,javascript,typescript setlocal cc=80
 autocmd FileType rust setlocal cc=100
 autocmd FileType java setlocal cc=100
 autocmd FileType tex,markdown set spell
@@ -99,7 +99,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " nerdtree
 nmap <leader>o :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " doxygen
@@ -109,20 +108,22 @@ nmap <leader>d :Dox<CR>
 vmap <leader>t :Tab<space>/
 vmap <leader><space> :Tab<space>/=<CR>
 
-" autoformat
-autocmd FileType c,h,cpp,hpp nmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
-autocmd FileType c,h,cpp,hpp vmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
-let g:clang_format#detect_style_file = 1
-autocmd FileType rust nmap <leader>f :RustFmt<CR>
-
 " language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'go': ['go-langserver'],
+    \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
     \ }
 let g:LanguageClient_autoStart = 1
 nmap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nmap <leader>r :call LanguageClient_textDocument_rename()<CR>
 nmap <leader>g :call LanguageClient_textDocument_definition()<CR>
+nmap <leader>f :call LanguageClient_textDocument_formatting()<CR>
+
+" autoformat
+autocmd FileType c,h,cpp,hpp nmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
+autocmd FileType c,h,cpp,hpp vmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
+let g:clang_format#detect_style_file = 1
 
 " completion
 imap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
