@@ -10,6 +10,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-rooter'
 Plug 'cloudhead/neovim-fuzzy'
 Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-eunuch'
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -17,13 +18,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " commenting
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DoxygenToolkit.vim'
-" completion and intelligent plugins
+" make it an IDE now
 Plug 'autozimu/LanguageClient-neovim'
 Plug 'roxma/nvim-Completion-Manager'
-" language specific
-Plug 'rust-lang/rust.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'ekalinin/Dockerfile.vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " aesthetic
@@ -100,6 +98,8 @@ let g:NERDTrimTrailingWhitespace = 1
 nmap <leader>o :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber
 
 " doxygen
 nmap <leader>d :Dox<CR>
@@ -113,6 +113,8 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
+    \ 'javascript': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'typescript': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
     \ }
 let g:LanguageClient_autoStart = 1
 nmap <silent> K :call LanguageClient_textDocument_hover()<CR>
