@@ -19,9 +19,14 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " make it an IDE now
-Plug 'autozimu/LanguageClient-neovim'
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
 Plug 'roxma/nvim-Completion-Manager'
-Plug 'sheerun/vim-polyglot'
+Plug 'ashfordneil/vim-polyglot'
+" quality of life
+Plug 'tpope/vim-abolish'
 call plug#end()
 
 " aesthetic
@@ -30,10 +35,12 @@ color solarized
 set nohlsearch
 
 " airline
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 2
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1 " turn it on
+let g:airline_powerline_fonts = 1 " make it look nice
+
+let g:airline#extensions#tabline#fnamemod = ':.' " buffer name format
+let g:airline#extensions#tabline#show_buffers = 1 " buffers always shown
+let g:airline#extensions#tabline#buffer_idx_mode = 2 " buffer numbers always shown
 
 " rules and margins and spelling
 set relativenumber
@@ -52,11 +59,12 @@ set shiftwidth=4
 set tabstop=4
 set cino=N-s
 
-" quick maps
+" quick things
 imap jk <Esc>
 imap kj <Esc>
 nmap <leader>w :w<CR>
 nmap ZA :xa<CR>
+set mouse=n
 
 " buffers
 set hidden
@@ -73,6 +81,8 @@ nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>0 <Plug>AirlineSelectTab10
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
 
 " windows
 set splitright
@@ -94,6 +104,9 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDTrimTrailingWhitespace = 1
 
+" rooter
+let g:rooter_patterns = ['package.json', '.git/']
+
 " nerdtree
 nmap <leader>o :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -101,31 +114,40 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeShowLineNumbers=1
 autocmd FileType nerdtree setlocal relativenumber
 
-" doxygen
-nmap <leader>d :Dox<CR>
-
 " tabular
 vmap <leader>t :Tab<space>/
 vmap <leader><space> :Tab<space>/=<CR>
 
 " language servers
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rls'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
-    \ 'javascript': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
-    \ 'typescript': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'typescript': ['tsserver'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'css': ['css-languageserver', '--stdio'],
+    \ 'json': ['json-languageserver', '--stdio'],
+    \ 'html': ['html-languageserver', '--stdio'],
+    \ 'elixir': ['bash', '-c', 'ERL_LIBS=/usr/opt/lsp mix elixir_ls.language_server'],
+    \ 'c': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'objc': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'python': ['pyls'],
     \ }
 let g:LanguageClient_autoStart = 1
 nmap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nmap <leader>r :call LanguageClient_textDocument_rename()<CR>
 nmap <leader>g :call LanguageClient_textDocument_definition()<CR>
+nmap <leader>d :call LanguageClient_textDocument_codeAction()<CR>
 nmap <leader>f :call LanguageClient_textDocument_formatting()<CR>
-
-" autoformat
-autocmd FileType c,h,cpp,hpp nmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
-autocmd FileType c,h,cpp,hpp vmap <leader>f :pyf /usr/local/share/clang/clang-format.py<CR>
-let g:clang_format#detect_style_file = 1
+vmap <leader>f :call LanguageClient_textDocument_rangeFormatting()<CR>
+nmap <leader>l :call LanguageClient_textDocument_references()<CR>
+nmap <leader>a :call LanguageClient_workspace_symbol()<CR>
 
 " completion
 imap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+imap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+
+" marking
+autocmd BufRead,BufNewFile *.styled set filetype=c
+autocmd BufEnter,WinEnter *.styled call matchadd("SpecialComment", "^\[[A-Za-z\-]*\].*$", -1)
+autocmd BufEnter,WinEnter *.styled syn match cComment "^\[[A-Za-z\-]*\].*$"
