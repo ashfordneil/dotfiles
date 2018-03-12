@@ -33,6 +33,7 @@ call plug#end()
 set background=light
 color solarized
 set nohlsearch
+set im!
 
 " airline
 let g:airline#extensions#tabline#enabled = 1 " turn it on
