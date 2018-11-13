@@ -31,7 +31,7 @@ if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/neil/
 if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi
 
 # iterm shell integration
-test -e "${HOME}/.config/zsh/iterm2_shell_integration.zsh" && source "${HOME}/.config/zsh/iterm2_shell_integration.zsh"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # rust <3
 source $HOME/.cargo/env

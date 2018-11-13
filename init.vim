@@ -47,7 +47,7 @@ set relativenumber
 set number
 autocmd FileType c,h,cpp,hpp,python,sh,mysql,javascript,typescript setlocal cc=80
 autocmd FileType rust setlocal cc=100
-autocmd FileType java setlocal cc=100
+autocmd FileType java setlocal cc=80
 autocmd FileType tex,markdown set spell
 
 " folding and indentation
@@ -120,17 +120,19 @@ vmap <leader><space> :Tab<space>/=<CR>
 
 " language servers
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
-    \ 'typescript': ['tsserver'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'json': ['json-languageserver', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
     \ 'elixir': ['bash', '-c', 'ERL_LIBS=/usr/opt/lsp mix elixir_ls.language_server'],
     \ 'c': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'cpp': ['/usr/local/opt/llvm/bin/clangd'],
     \ 'objc': ['/usr/local/opt/llvm/bin/clangd'],
+    \ 'swift': ['/usr/opt/langserver-swift'],
     \ 'python': ['pyls'],
     \ }
 let g:LanguageClient_autoStart = 1
