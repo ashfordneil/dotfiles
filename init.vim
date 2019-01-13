@@ -23,7 +23,11 @@ Plug 'autozimu/LanguageClient-neovim', {
             \ 'branch': 'next',
             \ 'do': 'bash install.sh',
             \ }
-Plug 'roxma/nvim-Completion-Manager'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-path'
+Plug 'wellle/tmux-complete.vim'
+
 Plug 'ashfordneil/vim-polyglot'
 " quality of life
 Plug 'tpope/vim-abolish'
@@ -85,8 +89,8 @@ nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>+ <Plug>AirlineSelectNextTab
 
 " windows
-set splitright
 set splitbelow
+set splitright
 nmap <leader>v :vs<CR>
 nmap <leader>s :sp<CR>
 nmap <C-h> <C-w>h
@@ -120,7 +124,7 @@ vmap <leader><space> :Tab<space>/=<CR>
 
 " language servers
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['rls'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
     \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
@@ -146,6 +150,10 @@ nmap <leader>l :call LanguageClient_textDocument_references()<CR>
 nmap <leader>a :call LanguageClient_workspace_symbol()<CR>
 
 " completion
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+
+imap <expr><CR> pumvisible() ? "\<c-y>\<cr>" : "\<CR>"
 imap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 imap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 
