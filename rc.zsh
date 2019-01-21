@@ -7,6 +7,7 @@ zplug "lib/completion", from:oh-my-zsh
 zplug "mafredri/zsh-async", from:github, defer:0
 zplug "sindresorhus/pure", from:github
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "aperezdc/zsh-fzy"
 
 # Install and Load Plugins
 if ! zplug check --verbose; then
@@ -35,3 +36,11 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # rust <3
 source $HOME/.cargo/env
+
+# fuzzy
+zstyle :fzy:cd command fd --type d
+bindkey '^T' fzy-cd-widget
+bindkey '^R' fzy-history-widget
+
+# git
+alias gdog='git log --all --decorate --oneline --graph'
