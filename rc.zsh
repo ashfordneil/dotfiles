@@ -39,7 +39,9 @@ source $HOME/.cargo/env
 
 # fuzzy
 zstyle :fzy:cd command fd --type d
-bindkey '^T' fzy-cd-widget
+zstyle :fzy:file command fd
+bindkey '\ec' fzy-cd-widget
+bindkey '^T' fzy-file-widget
 bindkey '^R' fzy-history-widget
 
 # git

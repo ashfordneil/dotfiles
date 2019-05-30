@@ -39,12 +39,18 @@ color solarized
 set nohlsearch
 
 " airline
-let g:airline#extensions#tabline#enabled = 1 " turn it on
-let g:airline_powerline_fonts = 1 " make it look nice
+let g:airline#extensions#tabline#buffer_idx_format = {} " change number formatting for tab bar
+for i in range(0, 9)
+  let g:airline#extensions#tabline#buffer_idx_format[i] = printf("%d: ", i)
+endfor
 
+let g:airline#extensions#tabline#enabled = 1 " turn on tab bar
+let g:airline_powerline_fonts = 1 " make it look nice
+let g:airline#extensions#tabline#excludes =
+  \ ['^term:', '^fugitive:', '\.git/index'] " hide temporary windows
 let g:airline#extensions#tabline#fnamemod = ':.' " buffer name format
 let g:airline#extensions#tabline#show_buffers = 1 " buffers always shown
-let g:airline#extensions#tabline#buffer_idx_mode = 2 " buffer numbers always shown
+let g:airline#extensions#tabline#buffer_idx_mode = 1 " buffer numbers always shown - 1-9
 
 " rules and margins and spelling
 set relativenumber
@@ -58,10 +64,14 @@ autocmd FileType tex,markdown set spell
 set foldmethod=syntax
 set smarttab
 set expandtab
-set softtabstop=4
-set shiftwidth=4
-set tabstop=4
-set cino=N-s
+
+autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal softtabstop=4
+autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal shiftwidth=4
+autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal tabstop=4
+
+autocmd FileType javascript,typescript,css,scss setlocal softtabstop=2
+autocmd FileType javascript,typescript,css,scss setlocal shiftwidth=2
+autocmd FileType javascript,typescript,css,scss setlocal tabstop=2
 
 " quick things
 imap jk <Esc>
@@ -127,7 +137,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
-    \ 'typescript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'typescript': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
     \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'json': ['json-languageserver', '--stdio'],
