@@ -22,9 +22,6 @@ zplug load
 bindkey -v
 export TERM=xterm-256color
 
-# Tmux settings (seeing as the developers don't want to do this themselves)
-alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/neil/google-cloud-sdk/path.zsh.inc'; fi
 
