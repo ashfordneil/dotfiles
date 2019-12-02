@@ -22,12 +22,6 @@ zplug load
 bindkey -v
 export TERM=xterm-256color
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/neil/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi
-
 # iterm shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -43,3 +37,12 @@ bindkey '^R' fzy-history-widget
 
 # git
 alias gdog='git log --all --decorate --oneline --graph'
+
+# homebrew completions
+fpath=(/usr/local/share/zsh/site-functions $fpath)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/neil/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil/google-cloud-sdk/completion.zsh.inc'; fi

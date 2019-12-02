@@ -28,7 +28,7 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-path'
 Plug 'wellle/tmux-complete.vim'
 
-Plug 'ashfordneil/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 " quality of life
 Plug 'tpope/vim-abolish'
 call plug#end()
@@ -69,9 +69,9 @@ autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal softtabstop=4
 autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal shiftwidth=4
 autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal tabstop=4
 
-autocmd FileType javascript,typescript,css,scss setlocal softtabstop=2
-autocmd FileType javascript,typescript,css,scss setlocal shiftwidth=2
-autocmd FileType javascript,typescript,css,scss setlocal tabstop=2
+autocmd FileType javascript,typescript,typescriptreact,json,css,scss setlocal softtabstop=2
+autocmd FileType javascript,typescript,typescriptreact,json,css,scss setlocal shiftwidth=2
+autocmd FileType javascript,typescript,typescriptreact,json,css,scss setlocal tabstop=2
 
 " quick things
 imap jk <Esc>
@@ -134,7 +134,7 @@ vmap <leader><space> :Tab<space>/=<CR>
 
 " language servers
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rls'],
+    \ 'rust': ['ra_lsp_server'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
     \ 'typescript': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
