@@ -1,7 +1,7 @@
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 " aesthetic
-Plug 'https://github.com/altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 Plug 'godlygeek/tabular'
 " airline
 Plug 'vim-airline/vim-airline'
@@ -28,14 +28,16 @@ Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-path'
 Plug 'wellle/tmux-complete.vim'
 
-Plug 'ashfordneil/vim-polyglot'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 " quality of life
 Plug 'tpope/vim-abolish'
 call plug#end()
 
 " aesthetic
-set background=light
-color solarized
+set termguicolors
+set background=dark
+color gruvbox
 set nohlsearch
 
 " airline
@@ -69,9 +71,9 @@ autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal softtabstop=4
 autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal shiftwidth=4
 autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal tabstop=4
 
-autocmd FileType javascript,typescript,css,scss setlocal softtabstop=2
-autocmd FileType javascript,typescript,css,scss setlocal shiftwidth=2
-autocmd FileType javascript,typescript,css,scss setlocal tabstop=2
+autocmd FileType javascript,typescript,typescriptreact,css,scss setlocal softtabstop=2
+autocmd FileType javascript,typescript,typescriptreact,css,scss setlocal shiftwidth=2
+autocmd FileType javascript,typescript,typescriptreact,css,scss setlocal tabstop=2
 
 " quick things
 imap jk <Esc>
@@ -138,7 +140,7 @@ let g:LanguageClient_serverCommands = {
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
     \ 'typescript': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
-    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'json': ['json-languageserver', '--stdio'],
     \ 'html': ['html-languageserver', '--stdio'],
