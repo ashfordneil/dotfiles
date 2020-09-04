@@ -1,7 +1,7 @@
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 " aesthetic
-Plug 'morhetz/gruvbox'
+Plug 'overcache/NeoSolarized'
 Plug 'godlygeek/tabular'
 " airline
 Plug 'vim-airline/vim-airline'
@@ -15,6 +15,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'APZelos/blamer.nvim'
 " commenting
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -33,13 +34,15 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'sheerun/vim-polyglot'
 " quality of life
 Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-sleuth'
 call plug#end()
 
 " aesthetic
 set termguicolors
-set background=dark
-color gruvbox
+set background=light
+color NeoSolarized
 set nohlsearch
+let g:blamer_enabled = 1
 
 " airline
 let g:airline#extensions#tabline#buffer_idx_format = {} " change number formatting for tab bar
@@ -58,23 +61,7 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1 " buffer numbers always sho
 " rules and margins and spelling
 set relativenumber
 set number
-autocmd FileType c,h,cpp,hpp,python,sh,mysql,javascript,typescript setlocal cc=80
-autocmd FileType rust setlocal cc=100
-autocmd FileType java setlocal cc=80
 autocmd FileType tex,markdown set spell
-
-" folding and indentation
-set foldmethod=syntax
-set smarttab
-set expandtab
-
-autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal softtabstop=4
-autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal shiftwidth=4
-autocmd FileType c,h,cpp,hpp,python,sh,mysql setlocal tabstop=4
-
-autocmd FileType javascript,typescript,typescriptreact,json,yaml,css,scss setlocal softtabstop=2
-autocmd FileType javascript,typescript,typescriptreact,json,yaml,css,scss setlocal shiftwidth=2
-autocmd FileType javascript,typescript,typescriptreact,json,yaml,css,scss setlocal tabstop=2
 
 " quick things
 imap jk <Esc>
@@ -82,6 +69,7 @@ imap kj <Esc>
 nmap <leader>w :w<CR>
 nmap ZA :xa<CR>
 set mouse=n
+set foldmethod=syntax
 
 " buffers
 set hidden
@@ -137,10 +125,12 @@ vmap <leader><space> :Tab<space>/=<CR>
 
 " language servers
 let g:LanguageClient_serverCommands = {
+    \ 'reason': ['reason-language-server'],
     \ 'rust': ['ra_lsp_server'],
     \ 'go': ['go-langserver'],
     \ 'java': ['java', '-cp', '/usr/opt/jls.jar', 'org.javacs.Main'],
     \ 'typescript': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
+    \ 'javascript': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
     \ 'javascript.jsx': ['/usr/local/lib/node_modules/typescript-language-server/lib/cli.js', '--stdio'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'json': ['json-languageserver', '--stdio'],

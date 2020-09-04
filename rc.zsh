@@ -1,4 +1,5 @@
 # List Plugins
+ZPLUG_HOME=/usr/local/Cellar/zplug/2.4.2
 source $ZPLUG_HOME/init.zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/cargo", from:oh-my-zsh
@@ -20,7 +21,9 @@ zplug load
 
 # Terminal Settings
 bindkey -v
-export TERM=xterm-256color
+
+# Prompt
+eval "$(starship init zsh)"
 
 # iterm shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
