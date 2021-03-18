@@ -9,6 +9,7 @@ zplug "mafredri/zsh-async", from:github, defer:0
 zplug "sindresorhus/pure", from:github
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "aperezdc/zsh-fzy"
+zplug "g-plane/zsh-yarn-autocompletions", hook-build:"./zplug.zsh", defer:2
 
 # Install and Load Plugins
 if ! zplug check --verbose; then
