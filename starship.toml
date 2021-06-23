@@ -1,4 +1,11 @@
+[character]
+success_symbol = "[λ](bold)"
+error_symbol = "[λ](bold red)"
+
 [git_status]
 untracked = "🐾"
 stashed = "📦"
 modified = "📝"
+
+[git_commit]
+only_detached = false

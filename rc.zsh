@@ -6,7 +6,6 @@ zplug "plugins/cargo", from:oh-my-zsh
 zplug "plugins/rust", from:oh-my-zsh
 zplug "lib/completion", from:oh-my-zsh
 zplug "mafredri/zsh-async", from:github, defer:0
-zplug "sindresorhus/pure", from:github
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "aperezdc/zsh-fzy"
 zplug "g-plane/zsh-yarn-autocompletions", hook-build:"./zplug.zsh", defer:2
@@ -27,7 +26,7 @@ bindkey -v
 eval "$(starship init zsh)"
 
 # iterm shell integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # rust <3
 source $HOME/.cargo/env
