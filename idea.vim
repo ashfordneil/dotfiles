@@ -9,3 +9,4 @@ nmap <leader>q :action CloseActiveTab<CR>
 nmap <leader>r :action RenameElement<CR>
 set relativenumber
 set number
+set ideajoin

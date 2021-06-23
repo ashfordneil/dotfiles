@@ -1,4 +1,5 @@
 # List Plugins
+PATH=/usr/local/bin:$PATH
 ZPLUG_HOME=/usr/local/Cellar/zplug/2.4.2
 source $ZPLUG_HOME/init.zsh
 zplug "plugins/git", from:oh-my-zsh
