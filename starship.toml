@@ -1,11 +1,14 @@
 [character]
 success_symbol = "[λ](bold)"
+vicmd_symbol = "[λ](bold green)"
 error_symbol = "[λ](bold red)"
-
-[git_status]
-untracked = "🐾"
-stashed = "📦"
-modified = "📝"
 
 [git_commit]
 only_detached = false
+tag_disabled = false
+
+[package]
+display_private = true
+
+[nodejs]
+disabled = true
