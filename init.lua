@@ -16,9 +16,10 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   use {
     'hoob3rt/lualine.nvim',
-    requires = {{'kyazdani42/nvim-web-devicons'}}
+    requires = 'kyazdani42/nvim-web-devicons'
   }
   use 'ishan9299/nvim-solarized-lua'
+  use 'cormacrelf/dark-notify'
   use {
     'akinsho/nvim-bufferline.lua',
     requires = 'kyazdani42/nvim-web-devicons'
@@ -27,6 +28,12 @@ require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
   }
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+  use 'b3nj5m1n/kommentary'
+  use 'editorconfig/editorconfig-vim'
 end)
 
 -- Autocompletion
@@ -109,12 +116,15 @@ require('nvim-treesitter.configs').setup {
     enable = true
   }
 }
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 10000000
 
 -- Status line
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'solarized_dark'
+    theme = 'solarized_light'
   },
   sections = {
     lualine_a = {'mode'},
@@ -134,7 +144,10 @@ require('bufferline').setup {
   options = {
     numbers = "ordinal",
     number_style = 'none',
-    separator_style = 'slant'
+    separator_style = 'slant',
+    always_show_bufferline = true,
+    show_close_icon = false,
+    show_buffer_close_icons = false
   }
 }
 for i = 1, 9 do
@@ -167,6 +180,9 @@ telescope.setup {
 telescope.load_extension('fzy_native')
 vim.api.nvim_set_keymap('n', '<leader>t', ':Telescope find_files<CR>', {})
 
+-- Tree view
+vim.api.nvim_set_keymap('n', '<leader>o', ':NvimTreeToggle<CR>', {})
+
 -- Other Keymaps
 vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {})
 vim.api.nvim_set_keymap('i', 'kj', '<Esc>', {})
@@ -177,8 +193,12 @@ vim.opt.hlsearch = false
 vim.opt.mouse = 'n'
 vim.opt.relativenumber = true
 vim.opt.number = true
+vim.opt.diffopt = 'vertical'
+vim.opt.hidden = true
 
 -- Color
 vim.opt.termguicolors = true
-vim.opt.background = 'dark'
+vim.opt.background = 'light'
 vim.cmd('colorscheme solarized')
+require('dark_notify').run()
+require('dark_notify').update()
