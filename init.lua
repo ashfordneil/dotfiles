@@ -15,7 +15,7 @@ require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
   use {
-    'hoob3rt/lualine.nvim',
+    'shadmansaleh/lualine.nvim',
     requires = 'kyazdani42/nvim-web-devicons'
   }
   use 'ishan9299/nvim-solarized-lua'
@@ -34,6 +34,7 @@ require('packer').startup(function()
   }
   use 'b3nj5m1n/kommentary'
   use 'editorconfig/editorconfig-vim'
+  use 'f-person/git-blame.nvim'
 end)
 
 -- Autocompletion
@@ -200,5 +201,16 @@ vim.opt.hidden = true
 vim.opt.termguicolors = true
 vim.opt.background = 'light'
 vim.cmd('colorscheme solarized')
-require('dark_notify').run()
+require('dark_notify').run({
+  onchange = function(mode)
+    local theme = 'solarized_light'
+    if mode == 'dark' then
+      theme = 'solarized_dark'
+    end
+
+    require('lualine').setup({
+      options = { theme = theme }
+    })
+  end
+})
 require('dark_notify').update()
