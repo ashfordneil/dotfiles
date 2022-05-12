@@ -53,3 +53,6 @@ if [ -f '/Users/neil/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/neil
 
 # sanity
 export EDITOR=nvim
+
+# fnm (not nvm)
+eval "$(fnm env --use-on-cd)"

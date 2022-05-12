@@ -7,7 +7,6 @@ local servers = {
 function install(use)
   -- Use the Language Server for all the smarts
   use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp-status.nvim'
 
   -- Snippet Support (I think this works, I'm not really sure)
   use 'L3MON4D3/LuaSnip'
@@ -18,17 +17,16 @@ function install(use)
   -- Things to make the autocompletion work
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
+
+  -- Status
+  use 'j-hui/fidget.nvim'
 end
 
 function setup()
   local nvim_lsp = require('lspconfig')
-  local lsp_status = require('lsp-status')
   local luasnip = require('luasnip')
   local cmp = require('cmp')
   local cmp_nvim = require('cmp_nvim_lsp')
-
-  -- Update the status line
-  lsp_status.register_progress()
 
   -- Setup completions
   cmp.setup {
@@ -48,6 +46,7 @@ function setup()
 	  fallback()
 	end
       end, { 'i', 's' }),
+
       ['<S-Tab>'] = cmp.mapping(function(fallback)
 	if cmp.visible() then
 	  cmp.select_prev_item()
@@ -56,11 +55,12 @@ function setup()
 	else
 	  fallback()
 	end
-      end, { 'i', 's' })
+      end, { 'i', 's' }),
     },
 
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' }
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' }
     }, {
       { name = 'buffer' },
     })
@@ -68,8 +68,6 @@ function setup()
 
   -- Setup function each time we attach an LSP to a buffer
   local on_attach = function(client, bufnr)
-    lsp_status.on_attach(client)
-
     -- Do a whole bunch of mappings for that buffer
     local opts = { noremap = true, silent = true }
     local map = vim.api.nvim_buf_set_keymap;
@@ -87,15 +85,16 @@ function setup()
   local snip_capabilities = cmp_nvim.update_capabilities(
     vim.lsp.protocol.make_client_capabilities()
   )
-  local status_capabilities = lsp_status.capabilities
 
   -- Set up the language servers
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
-      capabilities = vim.tbl_extend('keep', snip_capabilities, status_capabilities),
+      capabilities = snip_capabilities,
       on_attach = on_attach
     }
   end
+
+  require('fidget').setup {}
 end
 
 return {

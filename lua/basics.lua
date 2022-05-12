@@ -4,6 +4,7 @@ vim.api.nvim_set_keymap('i', 'kj', '<Esc>', { noremap = true })
 
 -- Minor settings
 vim.opt.shiftwidth=2
+vim.opt.softtabstop=2
 vim.opt.hlsearch=false
 vim.opt.mouse = 'n'
 vim.opt.relativenumber = true
