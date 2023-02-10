@@ -7,6 +7,7 @@ local servers = {
 function install(use)
   -- Use the Language Server for all the smarts
   use 'neovim/nvim-lspconfig'
+  use 'j-hui/fidget.nvim'
 
   -- Snippet Support (I think this works, I'm not really sure)
   use 'L3MON4D3/LuaSnip'
@@ -17,9 +18,8 @@ function install(use)
   -- Things to make the autocompletion work
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
-
-  -- Status
-  use 'j-hui/fidget.nvim'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-cmdline'
 end
 
 function setup()
@@ -27,6 +27,10 @@ function setup()
   local luasnip = require('luasnip')
   local cmp = require('cmp')
   local cmp_nvim = require('cmp_nvim_lsp')
+  local fidget = require('fidget')
+
+  -- Update the status line
+  fidget.setup {}
 
   -- Setup completions
   cmp.setup {
@@ -39,7 +43,11 @@ function setup()
     mapping = {
       ['<Tab>'] = cmp.mapping(function(fallback)
 	if cmp.visible() then
+	  local entry = cmp.get_selected_entry()
 	  cmp.select_next_item()
+	  if not entry then
+	    cmp.complete()
+	  end
 	elseif luasnip.expand_or_jumpable() then
 	  luasnip.expand_or_jump()
 	else
@@ -66,6 +74,23 @@ function setup()
     })
   }
 
+  -- Use cmp for areas other than text
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
   -- Setup function each time we attach an LSP to a buffer
   local on_attach = function(client, bufnr)
     -- Do a whole bunch of mappings for that buffer
@@ -78,13 +103,11 @@ function setup()
 
     -- Telescope mappings
     map(bufnr, 'n', '<leader>l', '<Cmd>Telescope lsp_references<CR>', opts)
-    map(bufnr, 'n', '<leader><Space>', '<Cmd>Telescope lsp_code_actions<CR>', opts)
+    map(bufnr, 'n', '<leader><Space>', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   end
 
   -- Tell LSP about our completions
-  local snip_capabilities = cmp_nvim.update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  )
+  local snip_capabilities = cmp_nvim.default_capabilities()
 
   -- Set up the language servers
   for _, lsp in ipairs(servers) do
@@ -93,8 +116,6 @@ function setup()
       on_attach = on_attach
     }
   end
-
-  require('fidget').setup {}
 end
 
 return {

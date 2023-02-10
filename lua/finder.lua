@@ -10,23 +10,42 @@ function install(use)
   }
 
   use {
-    'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons'
+    'nvim-tree/nvim-tree.lua',
+    requires = 'nvim-tree/nvim-web-devicons'
   }
 end
 
 function setup()
   local telescope = require('telescope')
+  local telescope_actions = require('telescope.actions')
+  local telescope_builtin = require('telescope.builtin')
   local nvim_tree = require('nvim-tree')
+
+  local dropdown_theme = require('telescope.themes').get_dropdown({
+    result_height = 20;
+    winblend = 20;
+    width = 0.8;
+    prompt_title = '';
+    previewer = false;
+    borderchars = {
+      prompt = {'▀', '▐', '▄', '▌', '▛', '▜', '▟', '▙' };
+      results = {' ', '▐', '▄', '▌', '▌', '▐', '▟', '▙' };
+      preview = {'▀', '▐', '▄', '▌', '▛', '▜', '▟', '▙' };
+    };
+  })
 
   telescope.setup {
     defaults = {
-      theme = 'dropdown'
+      mappings = {
+	i = {
+	  ['<Esc>'] = telescope_actions.close
+	}
+      },
+      path_display = { 'smart' },
     },
 
     pickers = {
       find_files = {
-	layout_strategy = 'vertical',
 	previewer = false,
       }
     },
@@ -42,7 +61,7 @@ function setup()
   telescope.load_extension('fzy_native')
   nvim_tree.setup {}
 
-  vim.api.nvim_set_keymap('n', '<leader>t', ':Telescope find_files<CR>', { noremap = true })
+  vim.keymap.set('n', '<leader>t', function() telescope_builtin.find_files(dropdown_theme) end, { noremap = true })
   vim.api.nvim_set_keymap('n', '<leader>o', ':NvimTreeToggle<CR>', { noremap = true })
 end
 

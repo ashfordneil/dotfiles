@@ -1,7 +1,7 @@
 function install(use)
   use {
     'akinsho/bufferline.nvim',
-    requires = 'kyazdani42/nvim-web-devicons'
+    requires = 'nvim-tree/nvim-web-devicons'
   }
 end
 

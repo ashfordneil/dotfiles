@@ -4,7 +4,7 @@ end
 
 local setup = function()
   vim.opt.termguicolors = true
-  vim.cmd('colorscheme duskfox')
+  vim.cmd('colorscheme dawnfox')
 end
 
 return {
