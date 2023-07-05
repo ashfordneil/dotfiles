@@ -7,7 +7,7 @@ local servers = {
 function install(use)
   -- Use the Language Server for all the smarts
   use 'neovim/nvim-lspconfig'
-  use 'j-hui/fidget.nvim'
+  use { 'j-hui/fidget.nvim', tag = 'legacy' }
 
   -- Snippet Support (I think this works, I'm not really sure)
   use 'L3MON4D3/LuaSnip'

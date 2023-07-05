@@ -4,15 +4,6 @@ function install(use)
 end
 
 function setup()
-  local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-  parser_config.wgsl = {
-    install_info = {
-      url = 'https://github.com/szebniok/tree-sitter-wgsl',
-      files = {'src/parser.c'}
-    },
-  }
-  vim.cmd[[au BufRead,BufNewFile *.wgsl	set filetype=wgsl]]
-
   require('nvim-treesitter.install').prefer_git = true
   require('nvim-treesitter.configs').setup {
     autotag = {
