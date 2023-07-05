@@ -1,10 +1,10 @@
 local install = function(use)
-  use 'EdenEast/nightfox.nvim'
+  use 'peterlvilim/solarized.nvim'
 end
 
 local setup = function()
   vim.opt.termguicolors = true
-  vim.cmd('colorscheme dawnfox')
+  vim.cmd('colorscheme solarized')
 end
 
 return {
