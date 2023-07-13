@@ -1,5 +1,5 @@
 local install = function(use)
-  use 'peterlvilim/solarized.nvim'
+  use 'maxmx03/solarized.nvim'
 end
 
 local setup = function()
