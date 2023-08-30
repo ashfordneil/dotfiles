@@ -30,7 +30,11 @@ function setup()
   local fidget = require('fidget')
 
   -- Update the status line
-  fidget.setup {}
+  fidget.setup {
+    window = {
+      blend = 0
+    }
+  }
 
   -- Setup completions
   cmp.setup {

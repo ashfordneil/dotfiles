@@ -13,10 +13,10 @@ async def main(connection):
     initial_parts = initial_theme[0].split(" ")
 
     if "dark" in initial_parts:
-        initial_preset = await iterm2.ColorPreset.async_get(connection, "Solarized Dark")
+        initial_preset = await iterm2.ColorPreset.async_get(connection, "catppuccin-frappe")
         logger.info('Initial theme is dark')
     else:
-        initial_preset = await iterm2.ColorPreset.async_get(connection, "Solarized Light")
+        initial_preset = await iterm2.ColorPreset.async_get(connection, "catppuccin-latte")
         logger.info('Initial theme is light')
     
     # Update the list of all profiles and iterate over them.
@@ -34,9 +34,9 @@ async def main(connection):
             # Themes have space-delimited attributes, one of which will be light or dark.
             parts = theme.split(" ")
             if "dark" in parts:
-                preset = await iterm2.ColorPreset.async_get(connection, "Solarized Dark")
+                preset = await iterm2.ColorPreset.async_get(connection, "catppuccin-frappe")
             else:
-                preset = await iterm2.ColorPreset.async_get(connection, "Solarized Light")
+                preset = await iterm2.ColorPreset.async_get(connection, "catppuccin-latte")
 
             # Update the list of all profiles and iterate over them.
             profiles=await iterm2.PartialProfile.async_query(connection)

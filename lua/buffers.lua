@@ -8,6 +8,7 @@ end
 function setup()
   local bufferline = require('bufferline')
   bufferline.setup {
+    highlights = require('catppuccin.groups.integrations.bufferline').get(),
     options = {
       numbers = 'ordinal',
       separator_style = 'slant',
