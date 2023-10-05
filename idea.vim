@@ -1,6 +1,7 @@
 imap jk <Esc>
 imap kj <Esc>
 nmap <leader>w :w<CR>
+nmap <leader><Space> :action ShowIntentionActions<CR>
 nmap <leader>g :action GotoImplementation<CR>
 nmap <leader>f :action ReformatCode<CR>
 nmap <leader>p :action SearchEverywhere<CR>
