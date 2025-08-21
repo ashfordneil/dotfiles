@@ -12,3 +12,7 @@ display_private = true
 
 [nodejs]
 disabled = true
+
+[kubernetes]
+symbol = "[󱃾](blue) "
+disabled = false
